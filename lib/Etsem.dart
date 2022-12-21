@@ -46,6 +46,7 @@ class Etsem {
     String url="", 
     String jwt="", 
     String query="", 
+    String operationName="",
     Map vars=const {},
     this.onData,
     this.onString,
@@ -94,7 +95,7 @@ class Etsem {
             "id": randomID(),
             "type":"subscribe",
             "payload":{
-              "operationName":"",
+              "operationName":operationName,
               "query": query,
               "variables": vars
             }
