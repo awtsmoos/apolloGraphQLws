@@ -31,6 +31,10 @@ class Etsem {
         "type":"complete",
         "id":id
       }));
+
+      if(subscriptions[id] != null) {
+        subscriptions.remove(id);
+      }
     }
   }
 
@@ -40,7 +44,7 @@ class Etsem {
     
     
   }
-  var subscriptions = [];
+  var subscriptions = {};
 
   Etsem({
     String url="", 
@@ -91,17 +95,18 @@ class Etsem {
         case "connection_ack":
           onConnect!(this,js);
           var id = randomID();
-          graphQLws!.sink.add(jsonEncode({
-            "id": id,
-            "type":"subscribe",
-            "payload":{
+          var payload = {
               "operationName":operationName,
               "query": query,
               "variables": vars
-            }
+            };
+          graphQLws!.sink.add(jsonEncode({
+            "id": id,
+            "type":"subscribe",
+            "payload":payload
           }));
 
-          subscriptions.add(id);
+          subscriptions[id] = payload;
         break;
         case "next":
           var id = js["id"];
