@@ -55,7 +55,7 @@ class Etsem {
     this.onClosed
   }) {
     
-    con = WebSocketChannel.connect(Uri.parse("ws://127.0.0.1/websockets"),
+    con = WebSocketChannel.connect(Uri.parse(url),
         protocols: ["graphql-ws"]);
 
     graphQLws = con!.forGraphQL();
