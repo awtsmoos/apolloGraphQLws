@@ -90,9 +90,9 @@ class Etsem {
       switch(js["type"]) {
         case "connection_ack":
           onConnect!(this,js);
-
+          var id = randomID();
           graphQLws!.sink.add(jsonEncode({
-            "id": randomID(),
+            "id": id,
             "type":"subscribe",
             "payload":{
               "operationName":operationName,
@@ -100,11 +100,13 @@ class Etsem {
               "variables": vars
             }
           }));
+
+          subscriptions.add(id);
         break;
         case "next":
           var id = js["id"];
           if(id != null) {
-            subscriptions.add(id);
+            
             onData!(this,js);
           }
           
