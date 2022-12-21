@@ -68,16 +68,23 @@ class _MyHomePageState extends State<MyHomePage> {
     ets = Etsem(
       url:"ws://127.0.0.1/websockets",
       jwt: "",
-      query:"subscription ok{\nhoyseef\n}",
-      vars:{
-        "B_H":4
-      },
+      
       onData: (js) {
         print("Got data! $js");
         
       },
       onConnect: (me,js) {
         print("Connected!");
+        /*
+          once connected, can start subscribing to events
+          can be now or whenever
+        */
+        me!.Subscribe(
+          query:"subscription ok{\nhoyseef\n}",
+          vars:{
+            "B_H":4
+          },
+        );
       },
       onError: (er) {
         print("Error connecting");
